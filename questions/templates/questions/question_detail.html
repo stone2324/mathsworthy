@@ -1,5 +1,5 @@
 {% extends "questions/base.html" %}
-{% block title %}Question Detail{% endblock %}
+{% block title %}{{ question.get_topic_display }} #{{ question.id }} - Mathsworthy{% endblock %}
 
 {% block content %}
 <div class="mb-4">
@@ -10,6 +10,10 @@
     <div class="col-md-8">
         <div class="card shadow-sm">
             <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="badge bg-info">{{ question.get_topic_display }}</span>
+                    <small class="text-muted">Question #{{ question.id }}</small>
+                </div>
                 <h2 class="card-title mb-4">{{ question.question_text }}</h2>
                 
                 <div class="list-group mb-4">
