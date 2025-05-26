@@ -1,6 +1,43 @@
-<h1>Math Questions</h1>
-<ul>
-  {% for question in questions %}
-    <li><a href="{{ question.id }}/">{{ question.question_text }}</a></li>
-  {% endfor %}
-</ul>
+{% extends "questions/base.html" %}
+{% block title %}Math Questions{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Math Questions</h1>
+
+<!-- Search Filters -->
+<div class="row mb-4">
+    <div class="col-md-6">
+        <form class="d-flex gap-2">
+            <select name="year" class="form-select" 
+                    hx-get="/"
+                    hx-target="#questions-table"
+                    hx-trigger="change"
+                    hx-include="[name='topic']">
+                <option value="">All Years</option>
+                {% for year in years %}
+                    <option value="{{ year }}" {% if selected_year == year|stringformat:"i" %}selected{% endif %}>
+                        Year {{ year }}
+                    </option>
+                {% endfor %}
+            </select>
+            <select name="topic" class="form-select"
+                    hx-get="/"
+                    hx-target="#questions-table"
+                    hx-trigger="change"
+                    hx-include="[name='year']">
+                <option value="">All Topics</option>
+                {% for topic in topics %}
+                    <option value="{{ topic }}" {% if selected_topic == topic %}selected{% endif %}>
+                        {{ topic|title }}
+                    </option>
+                {% endfor %}
+            </select>
+        </form>
+    </div>
+</div>
+
+<!-- Questions Table Container -->
+<div id="questions-table">
+    {% include "questions/question_table.html" %}
+</div>
+{% endblock %}

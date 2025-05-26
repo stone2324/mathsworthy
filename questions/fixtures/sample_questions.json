@@ -1,0 +1,31 @@
+[
+    {
+      "model": "questions.mathquestion",
+      "fields": {
+        "question_text": "What is 2 + 2?",
+        "choice_a": "3",
+        "choice_b": "4",
+        "choice_c": "5",
+        "choice_d": "6",
+        "correct_answer": "B",
+        "topic": "ARITHMETIC",
+        "difficulty": "EASY",
+        "school_year": 7
+      }
+    },
+    {
+      "model": "questions.mathquestion",
+      "fields": {
+        "question_text": "What is 5 x 3?",
+        "choice_a": "10",
+        "choice_b": "12",
+        "choice_c": "15",
+        "choice_d": "20",
+        "correct_answer": "C",
+        "topic": "ARITHMETIC",
+        "difficulty": "EASY",
+        "school_year": 7
+      }
+    }
+  ]
+  

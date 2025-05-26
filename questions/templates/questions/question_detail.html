@@ -1,9 +1,55 @@
-<h2>{{ question.question_text }}</h2>
-<ul>
-  <li>A. {{ question.choice_a }}</li>
-  <li>B. {{ question.choice_b }}</li>
-  <li>C. {{ question.choice_c }}</li>
-  <li>D. {{ question.choice_d }}</li>
-</ul>
-<p><strong>Answer:</strong> {{ question.correct_answer }}</p>
-<a href="/">Back to list</a>
+{% extends "questions/base.html" %}
+{% block title %}Question Detail{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+    <a href="/" class="btn btn-outline-secondary">← Back to list</a>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h2 class="card-title mb-4">{{ question.question_text }}</h2>
+                
+                <div class="list-group mb-4">
+                    <a href="{% url 'check_answer' question.id 'A' %}" 
+                       hx-get="{% url 'check_answer' question.id 'A' %}"
+                       hx-target="#answer-feedback"
+                       hx-swap="innerHTML"
+                       class="list-group-item list-group-item-action py-3">
+                        <span class="badge bg-primary me-2">A</span>
+                        {{ question.choice_a }}
+                    </a>
+                    <a href="{% url 'check_answer' question.id 'B' %}"
+                       hx-get="{% url 'check_answer' question.id 'B' %}"
+                       hx-target="#answer-feedback"
+                       hx-swap="innerHTML"
+                       class="list-group-item list-group-item-action py-3">
+                        <span class="badge bg-primary me-2">B</span>
+                        {{ question.choice_b }}
+                    </a>
+                    <a href="{% url 'check_answer' question.id 'C' %}"
+                       hx-get="{% url 'check_answer' question.id 'C' %}"
+                       hx-target="#answer-feedback"
+                       hx-swap="innerHTML"
+                       class="list-group-item list-group-item-action py-3">
+                        <span class="badge bg-primary me-2">C</span>
+                        {{ question.choice_c }}
+                    </a>
+                    <a href="{% url 'check_answer' question.id 'D' %}"
+                       hx-get="{% url 'check_answer' question.id 'D' %}"
+                       hx-target="#answer-feedback"
+                       hx-swap="innerHTML"
+                       class="list-group-item list-group-item-action py-3">
+                        <span class="badge bg-primary me-2">D</span>
+                        {{ question.choice_d }}
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="answer-feedback" class="mt-4"></div>
+    </div>
+</div>
+{% endblock %}
