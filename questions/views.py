@@ -6,9 +6,6 @@ from django.contrib.auth.decorators import login_required
 def landing_page(request):
     return render(request, 'questions/landing_page.html')
 
-def login_required_view(request):
-    return render(request, 'questions/login_required.html')
-
 @login_required(login_url='/accounts/login/')
 def question_list(request):
     # Get filter parameters
