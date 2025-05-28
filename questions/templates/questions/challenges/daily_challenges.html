@@ -1,0 +1,141 @@
+{% extends "questions/base/base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    
+    <!-- Tab Navigation -->
+    <ul class="nav nav-tabs" id="challengeTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="view-tab" data-bs-toggle="tab" data-bs-target="#view" type="button" role="tab" aria-controls="view" aria-selected="true">View Question Sets</button>
+        </li>
+
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="create-tab" data-bs-toggle="tab" data-bs-target="#create" type="button" role="tab" aria-controls="create" aria-selected="false">Create Question Set</button>
+        </li>
+    </ul>
+
+    <!-- Tab Content -->
+    <div class="tab-content" id="challengeTabsContent">
+        <!-- View Question Sets Tab -->
+        <div class="tab-pane fade show active" id="view" role="tabpanel" aria-labelledby="view-tab">
+            <div class="card mt-3">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped align-middle">
+                            <thead>
+                                <tr>
+                                    <th class="align-middle">Name</th>
+                                    <th class="align-middle">Year</th>
+                                    <th class="align-middle">Questions</th>
+                                    <th class="align-middle">Status</th>
+                                    <th class="align-middle">Created</th>
+                                    <th class="align-middle">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for set in question_sets %}
+                                <tr>
+                                    <td class="align-middle">{{ set.name }}</td>
+                                    <td class="align-middle">{{ set.year }}</td>
+                                    <td class="align-middle">{{ set.questions.count }}</td>
+                                    <td class="align-middle">
+                                        {% if set.is_active %}
+                                        <span class="badge bg-success">Active</span>
+                                        {% else %}
+                                        <span class="badge bg-secondary">Inactive</span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="align-middle">{{ set.created_at|date:"M d, Y" }}</td>
+                                    <td class="align-middle">
+                                        <a href="{% url 'view_question_set' set.id %}" class="btn btn-sm btn-info">View</a>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="6" class="text-center align-middle">No question sets found</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Create Question Set Tab -->
+        <div class="tab-pane fade" id="create" role="tabpanel" aria-labelledby="create-tab">
+            <div class="card mt-3">
+                <div class="card-body">
+                    <form method="POST" action="{% url 'create_question_set' %}" id="createSetForm">
+                        {% csrf_token %}
+                        <div class="row">
+                            <!-- Left Column -->
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="setName" class="form-label">Set Name</label>
+                                    <input type="text" class="form-control" id="setName" name="name" placeholder="Enter a name for your question set" required>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="year" class="form-label">School Year</label>
+                                    <select class="form-select" id="year" name="year" required>
+                                        <option value="">Select year...</option>
+                                        {% for year_value, year_label in school_years %}
+                                        <option value="{{ year_value }}">{{ year_label }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="difficulty" class="form-label">Difficulty Level</label>
+                                    <select class="form-select" id="difficulty" name="difficulty" required>
+                                        <option value="">Select difficulty...</option>
+                                        {% for diff_value, diff_label in difficulty_choices %}
+                                        <option value="{{ diff_value }}">{{ diff_label }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="numQuestions" class="form-label">Number of Questions</label>
+                                    <select class="form-select" id="numQuestions" name="num_questions" required>
+                                        <option value="">Select number of questions...</option>
+                                        {% for count_value, count_label in question_count_choices %}
+                                        <option value="{{ count_value }}">{{ count_label }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Right Column -->
+                            <div class="col-md-6">
+                                <label class="form-label">Select Topics</label>
+                                <div class="card bg-light">
+                                    <div class="card-body">
+                                        <div class="row g-2">
+                                            {% for topic_value, topic_label in topic_choices %}
+                                            <div class="col-6">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="topics" value="{{ topic_value }}" id="topic_{{ forloop.counter }}">
+                                                    <label class="form-check-label" for="topic_{{ forloop.counter }}">
+                                                        {{ topic_label }}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
+                            <button type="submit" class="btn btn-primary px-4">Create Question Set</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
