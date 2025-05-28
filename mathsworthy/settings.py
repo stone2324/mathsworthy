@@ -34,7 +34,7 @@ DEBUG = os.environ.get("DEBUG", "False") == "True"
 
 if ENV == "production":
     ALLOWED_HOSTS = [os.environ.get("RAILWAY_PUBLIC_DOMAIN")]
-    # CSRF_TRUSTED_ORIGINS = [f"https://{os.environ.get('RAILWAY_PUBLIC_DOMAIN')}"]
+    CSRF_TRUSTED_ORIGINS = [f"https://{os.environ.get('RAILWAY_PUBLIC_DOMAIN')}"]
 else:
     ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
     CSRF_TRUSTED_ORIGINS = ["http://localhost:8000"]
