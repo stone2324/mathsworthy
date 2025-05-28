@@ -2,42 +2,79 @@
 {% block title %}Questions - Mathsworthy{% endblock %}
 
 {% block content %}
-<h1 class="mb-4">Questions</h1>
-
-<!-- Search Filters -->
-<div class="row mb-4">
-    <div class="col-md-6">
-        <form class="d-flex gap-2">
-            <select name="year" class="form-select" 
-                    hx-get="/"
-                    hx-target="#questions-table"
-                    hx-trigger="change"
-                    hx-include="[name='topic']">
-                <option value="">All Years</option>
-                {% for year in years %}
-                    <option value="{{ year }}" {% if selected_year == year|stringformat:"i" %}selected{% endif %}>
-                        Year {{ year }}
-                    </option>
-                {% endfor %}
-            </select>
-            <select name="topic" class="form-select"
-                    hx-get="/"
-                    hx-target="#questions-table"
-                    hx-trigger="change"
-                    hx-include="[name='year']">
-                <option value="">All Topics</option>
-                {% for topic in topics %}
-                    <option value="{{ topic }}" {% if selected_topic == topic %}selected{% endif %}>
-                        {{ topic|title }}
-                    </option>
-                {% endfor %}
-            </select>
-        </form>
+<div class="container py-4">
+    <div class="row align-items-center mb-3">
+        <div class="col">
+            <h2 class="mb-0">Math Questions</h2>
+        </div>
+        <div class="col-auto">
+            <form hx-get="{% url 'question_list' %}" hx-target="#question-table" class="d-flex gap-2">
+                <select name="year" class="form-select form-select-sm" style="width: 120px" onchange="this.form.submit()">
+                    <option value="">All Years</option>
+                    {% for year in years %}
+                        <option value="{{ year }}" {% if selected_year == year|stringformat:"i" %}selected{% endif %}>
+                            Year {{ year }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <select name="topic" class="form-select form-select-sm" style="width: 140px" onchange="this.form.submit()">
+                    <option value="">All Topics</option>
+                    {% for topic in topics %}
+                        <option value="{{ topic }}" {% if selected_topic == topic %}selected{% endif %}>
+                            {{ topic|title }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </form>
+        </div>
     </div>
-</div>
 
-<!-- Questions Table Container -->
-<div id="questions-table">
-    {% include "questions/question_table.html" %}
+    <!-- Questions Table -->
+    <div id="question-table">
+        {% include "questions/question_table.html" %}
+    </div>
+
+    <!-- Pagination -->
+    {% if page_obj.paginator.num_pages > 1 %}
+    <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1{% if selected_year %}&year={{ selected_year }}{% endif %}{% if selected_topic %}&topic={{ selected_topic }}{% endif %}" aria-label="First">
+                        <span aria-hidden="true">&laquo;&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if selected_year %}&year={{ selected_year }}{% endif %}{% if selected_topic %}&topic={{ selected_topic }}{% endif %}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ num }}{% if selected_year %}&year={{ selected_year }}{% endif %}{% if selected_topic %}&topic={{ selected_topic }}{% endif %}">{{ num }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if selected_year %}&year={{ selected_year }}{% endif %}{% if selected_topic %}&topic={{ selected_topic }}{% endif %}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if selected_year %}&year={{ selected_year }}{% endif %}{% if selected_topic %}&topic={{ selected_topic }}{% endif %}" aria-label="Last">
+                        <span aria-hidden="true">&raquo;&raquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
 </div>
 {% endblock %}

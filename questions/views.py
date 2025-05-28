@@ -1,9 +1,12 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import MathQuestion
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 
 def landing_page(request):
+    if request.user.is_authenticated:
+        return redirect('question_list')
     return render(request, 'questions/landing_page.html')
 
 @login_required(login_url='/accounts/login/')
@@ -25,8 +28,13 @@ def question_list(request):
     years = MathQuestion.objects.values_list('school_year', flat=True).distinct().order_by('school_year')
     topics = [choice[0] for choice in MathQuestion.TOPIC_CHOICES]
     
+    # Pagination
+    paginator = Paginator(questions, 10)  # Show 10 questions per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
     context = {
-        'questions': questions,
+        'page_obj': page_obj,
         'years': years,
         'topics': topics,
         'selected_year': selected_year,
