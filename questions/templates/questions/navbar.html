@@ -1,0 +1,50 @@
+<nav id="main-navbar" class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">Mathsworthy</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+            aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item mx-2">
+          <a class="nav-link" href="/">Problems</a>
+        </li>
+        <li class="nav-item mx-2">
+          <a class="nav-link" href="/daily-challenges/">Daily Challenges</a>
+        </li>
+        <li class="nav-item mx-2">
+          <a class="nav-link" href="/results/">Results</a>
+        </li>
+      </ul>
+
+      <!-- User Authentication Section -->
+      <ul class="navbar-nav">
+        {% if user.is_authenticated %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" 
+               data-bs-toggle="dropdown" aria-expanded="false">
+              {{ user.username }}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+              <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
+              <li><a class="dropdown-item" href="{% url 'profile' %}">Settings</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <form method="post" action="{% url 'htmx_logout' %}" hx-post="{% url 'htmx_logout' %}" hx-target="body">
+                  {% csrf_token %}
+                  <button type="submit" class="dropdown-item">Sign Out</button>
+                </form>
+              </li>
+            </ul>
+          </li>
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Sign In</a>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav> 

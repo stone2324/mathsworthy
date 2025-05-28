@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'questions',
     "django_browser_reload",
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -146,3 +147,8 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Authentication settings
+LOGIN_REDIRECT_URL = 'question_list'
+LOGOUT_REDIRECT_URL = 'question_list'
+LOGIN_URL = 'login_required'
