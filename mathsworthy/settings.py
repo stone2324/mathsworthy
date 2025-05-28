@@ -150,5 +150,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Authentication settings
 LOGIN_REDIRECT_URL = 'question_list'
-LOGOUT_REDIRECT_URL = 'question_list'
-LOGIN_URL = 'login_required'
+LOGOUT_REDIRECT_URL = 'landing_page'
+LOGIN_URL = '/accounts/login/'

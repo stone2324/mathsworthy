@@ -3,10 +3,13 @@ from .models import MathQuestion
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 
+def landing_page(request):
+    return render(request, 'questions/landing_page.html')
+
 def login_required_view(request):
     return render(request, 'questions/login_required.html')
 
-@login_required(login_url='login_required')
+@login_required(login_url='/accounts/login/')
 def question_list(request):
     # Get filter parameters
     selected_year = request.GET.get('year')
@@ -39,12 +42,12 @@ def question_list(request):
     
     return render(request, 'questions/question_list.html', context)
 
-@login_required(login_url='login_required')
+@login_required(login_url='/accounts/login/')
 def question_detail(request, pk):
     question = get_object_or_404(MathQuestion, pk=pk)
     return render(request, 'questions/question_detail.html', {'question': question})
 
-@login_required(login_url='login_required')
+@login_required(login_url='/accounts/login/')
 def check_answer(request, pk, choice):
     question = get_object_or_404(MathQuestion, pk=pk)
     is_correct = choice == question.correct_answer

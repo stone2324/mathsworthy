@@ -8,14 +8,17 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto">
-        <li class="nav-item mx-2">
+        <li class="nav-item mx-3">
           <a class="nav-link" href="/">Problems</a>
         </li>
-        <li class="nav-item mx-2">
+        <li class="nav-item mx-3">
           <a class="nav-link" href="/daily-challenges/">Daily Challenges</a>
         </li>
-        <li class="nav-item mx-2">
-          <a class="nav-link" href="/results/">Results</a>
+        <li class="nav-item mx-3">
+          <a class="nav-link" href="/practice-exams/">Practice Exams</a>
+        </li>
+        <li class="nav-item mx-3">
+          <a class="nav-link" href="/progress/">Progress</a>
         </li>
       </ul>
 
@@ -23,8 +26,11 @@
       <ul class="navbar-nav">
         {% if user.is_authenticated %}
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" 
+            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" 
                data-bs-toggle="dropdown" aria-expanded="false">
+              <div class="avatar-circle me-2">
+                <i class="bi bi-person-circle"></i>
+              </div>
               {{ user.username }}
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">

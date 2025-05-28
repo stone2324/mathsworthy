@@ -48,7 +48,7 @@ def htmx_logout(request):
         logout(request)
         if request.headers.get('HX-Request'):
             return HttpResponse('''
-                <div hx-get="/login-required/" hx-trigger="load" hx-push-url="true"></div>
+                <div hx-get="/" hx-trigger="load" hx-push-url="true"></div>
             ''')
-        return redirect('login_required')
+        return redirect('landing_page')
     return HttpResponse(status=405)  # Method Not Allowed

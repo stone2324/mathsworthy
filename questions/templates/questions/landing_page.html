@@ -1,0 +1,65 @@
+{% extends 'questions/base.html' %}
+
+{% block title %}Welcome to MathsWorthy{% endblock %}
+
+{% block content %}
+<div class="hero-section py-5" style="background: white; min-height: 75vh; display: flex; align-items: center;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center">
+                <h1 class="display-3 fw-bold mb-4 animate__animated animate__fadeInDown" style="color: #1f2937;">MathsWorthy</h1>
+                <p class="lead mb-4 fs-4 animate__animated animate__fadeInUp" style="color: #4b5563;">Transform your mathematical journey with interactive learning, personalized challenges, and expert guidance.</p>
+                <div class="d-grid gap-3 d-sm-flex justify-content-sm-center animate__animated animate__fadeInUp mt-4">
+                    <a href="{% url 'login' %}" class="btn btn-primary btn-lg px-5 py-3 fw-bold shadow-lg hover-lift">Get Started</a>
+                    <a href="{% url 'register' %}" class="btn btn-outline-dark btn-lg px-5 py-3 fw-bold shadow-lg hover-lift">Join Now</a>
+                </div>
+                <div class="mt-4 row g-4 justify-content-center">
+                    <div class="col-md-4">
+                        <div class="feature-card p-3 rounded-3 shadow-sm">
+                            <i class="fas fa-brain fa-2x mb-3" style="color: #4b5563;"></i>
+                            <h5 style="color: #1f2937;">Smart Learning</h5>
+                            <p class="small mb-0" style="color: #6b7280;">Personalized learning paths</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="feature-card p-3 rounded-3 shadow-sm">
+                            <i class="fas fa-chart-line fa-2x mb-3" style="color: #4b5563;"></i>
+                            <h5 style="color: #1f2937;">Track Progress</h5>
+                            <p class="small mb-0" style="color: #6b7280;">Monitor your improvement</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="feature-card p-3 rounded-3 shadow-sm">
+                            <i class="fas fa-trophy fa-2x mb-3" style="color: #4b5563;"></i>
+                            <h5 style="color: #1f2937;">Achieve Goals</h5>
+                            <p class="small mb-0" style="color: #6b7280;">Reach new heights</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.hover-lift {
+    transition: transform 0.2s ease-in-out;
+}
+.hover-lift:hover {
+    transform: translateY(-3px);
+}
+.feature-card {
+    transition: transform 0.2s ease-in-out;
+    background: white;
+    border: 1px solid #e5e7eb;
+}
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+</style>
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+{% endblock %}
+{% endblock %} 
