@@ -1,4 +1,4 @@
-{% extends "questions/base.html" %}
+{% extends "questions/base/base.html" %}
 {% block title %}Questions - Mathsworthy{% endblock %}
 
 {% block content %}
@@ -31,7 +31,7 @@
 
     <!-- Questions Table -->
     <div id="question-table">
-        {% include "questions/question_table.html" %}
+        {% include "questions/questions/question_table.html" %}
     </div>
 
     <!-- Pagination -->

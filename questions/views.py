@@ -10,7 +10,7 @@ import json
 def landing_page(request):
     if request.user.is_authenticated:
         return redirect('question_list')
-    return render(request, 'questions/questions/landing_page.html')
+    return render(request, 'questions/landing_page.html')
 
 @login_required(login_url='/accounts/login/')
 def question_list(request):
@@ -29,7 +29,7 @@ def question_list(request):
     
     # Get unique years and topics for filter dropdowns
     years = MathQuestion.objects.values_list('school_year', flat=True).distinct().order_by('school_year')
-    topics = [choice[0] for choice in MathQuestion.TOPIC_CHOICES]
+    topics = [choice[0] for choice in TOPIC_CHOICES]
     
     # Pagination
     paginator = Paginator(questions, 10)  # Show 10 questions per page
